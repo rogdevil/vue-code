@@ -361,6 +361,8 @@ th {
 	cursor: pointer;
 	min-width: 200px;
 	text-align: center;
+	background: #000;
+	color: #fff;
 }
 tr {
 	min-width: 200px;
