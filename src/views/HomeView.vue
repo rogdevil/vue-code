@@ -29,11 +29,7 @@ const flattenData = (data: any) => {
 		let obj: IUser = {} as IUser;
 		obj.name = `${data[i].name.title}. ${data[i].name.first} ${data[i].name.last}`;
 		obj.slno = `${data[i].id.name}-${data[i].id.value}`;
-		obj.dob = `${data[i].dob.date
-			.split("T")[0]
-			.split("-")
-			.reverse()
-			.join("-")}`;
+		obj.dob = `${data[i].dob.date.split("T")[0].split("-").join("/")}`;
 		obj.email = data[i].email;
 		obj.location = `#${data[i].location.street.number} ${data[i].location.street.name}, ${data[i].location.city}, ${data[i].location.state}, ${data[i].location.country}-${data[i].location.postcode}`;
 		obj.phone = data[i].phone;
@@ -75,7 +71,11 @@ const filterData = (key: EUser) => {
 			userData.value.sort((a, b) => {
 				if (key === "dob") {
 					firstKey = new Date(a[`${key}`]);
+					console.log(firstKey, a[`${key}`]);
+
 					secondKey = new Date(b[`${key}`]);
+					console.log(secondKey, b[`${key}`]);
+					console.log(firstKey < secondKey);
 				} else if (key === "phone") {
 					firstKey = parseInt(a[`${key}`]);
 					secondKey = parseInt(b[`${key}`]);
