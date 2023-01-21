@@ -52,26 +52,39 @@ watchEffect(async () => {
 const filterData = (key: EUser) => {
 	if (userData && userData.value) {
 		sort.value.type = key;
+		let firstKey: number | string | Date, secondKey: number | string | Date;
 		if (sort.value.isDesc) {
 			sort.value.isDesc = false;
 
-			userData.value.sort((a, b) =>
-				a[`${key}`] > b[`${key}`]
-					? 1
-					: b[`${key}`] > a[`${key}`]
-					? -1
-					: 0
-			);
+			userData.value.sort((a, b) => {
+				if (key === "dob") {
+					firstKey = new Date(a[`${key}`]);
+					secondKey = new Date(b[`${key}`]);
+				} else if (key === "phone") {
+					firstKey = parseInt(a[`${key}`]);
+					secondKey = parseInt(b[`${key}`]);
+				} else {
+					firstKey = a[`${key}`];
+					secondKey = b[`${key}`];
+				}
+				return firstKey > secondKey ? 1 : secondKey > firstKey ? -1 : 0;
+			});
 		} else {
 			sort.value.isDesc = true;
 
-			userData.value.sort((a, b) =>
-				a[`${key}`] < b[`${key}`]
-					? 1
-					: b[`${key}`] < a[`${key}`]
-					? -1
-					: 0
-			);
+			userData.value.sort((a, b) => {
+				if (key === "dob") {
+					firstKey = new Date(a[`${key}`]);
+					secondKey = new Date(b[`${key}`]);
+				} else if (key === "phone") {
+					firstKey = parseInt(a[`${key}`]);
+					secondKey = parseInt(b[`${key}`]);
+				} else {
+					firstKey = a[`${key}`];
+					secondKey = b[`${key}`];
+				}
+				return firstKey < secondKey ? 1 : secondKey < firstKey ? -1 : 0;
+			});
 		}
 	}
 };
